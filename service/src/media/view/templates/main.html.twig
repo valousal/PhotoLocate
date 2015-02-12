@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Administration - Photolocate</title>
+        <link type="text/css" rel="stylesheet" href="{{rootUri}}/src/media/view/bootstrap/stylesheets/styles.css">
+        <script src="{{rootUri}}/src/media/view/bootstrap/javascripts/lib/jquery-1.11.2.min.js"></script>
+        <script src="{{rootUri}}/src/media/view/bootstrap/javascripts/bootstrap.js"></script>
+        <meta charset="UTF-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    </head>
+    
+    <body>
+        <div class="row page-header">
+         <a href="{{rootUri}}/admin/"> <h1 class="col-sm-6 col-sm-offset-3">PhotoLocate <small>Administration</small></h1></a>
+        </div>
+        {# <div class="grid_container"> #}
+            <!--HEADER-->
+            {# {% include "header.html.twig" %} #}
+            
+            <!--BLOCK CONTENT-->
+            <section id="maincontent">
+                {% block main_content %}
+                {% endblock %}
+            </section>
+            
+            <!--FOOTER-->
+           {#  {% include "footer.html.twig" %} #}
+       {#  </div> #}
+    </body>
+</html>

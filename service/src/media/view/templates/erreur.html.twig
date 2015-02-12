@@ -1,0 +1,12 @@
+{% extends "main.html.twig" %}
+
+{% block main_content %}
+    <section>
+       <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Une erreure est survenue
+      </div>
+      <a href="{{index}}">Retour accueil</a>
+    </section>
+{% endblock %}

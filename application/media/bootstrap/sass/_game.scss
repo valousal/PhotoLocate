@@ -1,0 +1,136 @@
+.row{
+	margin: 0;
+}
+
+#game{
+	height: 500px;
+	width: 640px;
+	margin: 4rem auto;
+	position: relative;
+	padding: 0;
+	border: 1px solid lightgrey;
+	@media screen and (max-width: 640px) {
+		width: 100%;
+	}
+
+	#map{
+		width: 100%;
+		height: 500px;
+		position: absolute;
+
+		.leaflet-control-container{
+			position: absolute;
+			z-index: 900;
+		}
+	}
+
+	#shadow{
+		width: 100%;
+		height: 500px;
+		position: absolute;
+		background-color: rgba(0,0,0,0.7);
+		z-index: 999;
+		text-align: center;
+		color: white;
+
+		#scoreManche{
+			display: none;
+			margin-top: 5em;
+
+			div{
+				text-align: center;
+				div{
+					
+
+					button{
+						@media screen and (max-width: 640px) {
+							margin: auto;
+						}
+					}
+				}
+			}
+		}
+
+		#mancheSuivante{
+			display: none;
+
+			img{
+				width: 200px;
+				height: 200px;
+				margin: auto;
+			}
+
+			div{
+				margin-top: 1em;
+
+				button{
+					min-width: 10rem;
+					max-width: 20rem;
+					margin: auto;
+				}
+			}
+		}
+
+		#partieDebut{
+			padding-top: 12rem;
+			div{
+				margin: 1em 0em 0em;
+				width: 100%;
+
+				div{
+					padding: 0rem 2rem;
+
+					button{
+						height: 5rem;
+						min-width: 10rem;
+						max-width: 20rem;
+						margin: 0px auto;
+						@media screen and (max-width: 640px) {
+							margin: auto;
+						}
+					}
+				}
+			}
+		}
+
+		#scoreFinal{
+			display: none;
+			padding-top: 12rem;
+			div{
+				margin: 1em 0em 0em;
+				width: 100%;
+
+				div{
+					padding: 0rem 2rem;
+
+					button{
+						min-width: auto;
+						margin: 0px auto;
+						@media screen and (max-width: 640px) {
+							margin: auto;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#time{
+		width: 7rem;
+		height: 4.5rem;
+		line-height: 4.5rem;
+		background-color: white;
+		color: #4A4A4A;
+		position: absolute;
+		text-align: center;
+		top: 0px;
+		right: 0px;
+		border: 1px solid lightgrey;
+		border-top: 0;
+		border-right: 0;
+
+		p{
+			font-size: 2.5rem;
+		}
+	}
+}

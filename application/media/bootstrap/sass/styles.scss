@@ -1,0 +1,15 @@
+// Import Bootstrap Compass integration
+@import "bootstrap-compass";
+
+// Import custom Bootstrap variables
+@import "bootstrap-variables";
+
+// Import Bootstrap for Sass
+@import "bootstrap";
+
+// Import Perso Sass
+@import "body";
+@import "home";
+@import "option";
+@import "game";
+

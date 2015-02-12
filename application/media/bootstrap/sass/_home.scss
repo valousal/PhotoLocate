@@ -1,0 +1,16 @@
+#home{
+	height: 500px;
+	width: 640px;
+	margin: 7rem auto;
+	position: relative;
+	padding: 0;
+	@media screen and (max-width: 640px) {
+		width: 100%;
+	}
+
+	div{
+		div{
+			margin-bottom: 1em;
+		}
+	}
+}

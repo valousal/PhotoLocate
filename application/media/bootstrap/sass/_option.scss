@@ -1,0 +1,10 @@
+#option{
+	height: 500px;
+	width: 400px;
+	margin: 4rem auto;
+	position: relative;
+	padding: 0;
+	@media screen and (max-width: 400px) {
+		width: 100%;
+	}
+}

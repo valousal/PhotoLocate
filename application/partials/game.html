@@ -1,0 +1,58 @@
+<div ng-init="InitGame()">
+	<div id='game' >
+		<div id='map'>
+
+	    </div>
+	    <div id='time'>
+        	<p><timer autostart='false' interval="1000" countdown="10" finish-callback="noTime()">{{seconds}}</timer>s</p>
+    	</div>
+    	<div id='shadow'>
+    		<div id='scoreManche' class='row'>
+				<div class="col-xs-10 col-sm-6 col-xs-offset-1  col-sm-offset-3">
+					<h1>{{scoreTotal}} pts</h1>
+					<h4>Score de la manche: {{scoreManche}} pts</h4>
+					<p> temps {{timerValue}}s</p>
+					<div class="col-xs-10 col-sm-10 col-xs-offset-1  col-sm-offset-1">
+						<button type="button" class="btn btn-primary btn-lg btn-block" ng-click='mancheSuivante()'> 
+							Suivant 
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div id='mancheSuivante' class='row'>
+				<div class="col-xs-10 col-xs-offset-1">
+					<h3> Trouver</h3>
+					<img src='media/Image/photo.jpg' alt=''/>
+				</div>
+				<div class="col-xs-10 col-xs-offset-1">
+					<button type="button" class="btn btn-primary btn-lg btn-block" ng-click='go()'> 
+						Go 
+					</button>
+				</div>
+			</div>
+
+			<div id='partieDebut' class='row'>
+				<div class="col-xs-10 col-xs-offset-1">
+					<h3> Début de la partie</h3>
+					<div class='col-xs-12 col-sm-4 '>
+						<button type="button" class="btn btn-primary btn-lg btn-block" ng-click='debutPartie()'> 
+							Débuter une partie
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div id='scoreFinal' class='row'>
+				<div class="col-xs-10 col-xs-offset-1">
+					<h3> Score final</h3>
+					<h1>{{scoreTotal}} pts</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

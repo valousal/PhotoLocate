@@ -1,0 +1,23 @@
+{
+    "name": "photolocate/wads",
+    "description": "Projet CISIIE, Salvestroni Valentin, Deladienee Paul, Winkel Loic, Arcuri Lucas 2014-2015",
+    "authors": [
+        {
+            "name": "WADS",
+            "email": "WADS@fai.com"
+        }
+    ],
+     "require": {
+        "slim/slim": "2.*",
+        "twig/twig": "~1.0",
+        "illuminate/database": "~4.2",
+        "ircmaxell/password-compat": "dev-master",
+		"codeguy/upload": "*",
+        "guzzlehttp/guzzle": "~5.2"
+    },
+    "autoload":{
+    	"psr-0" : {
+    		"media\\" : "src"
+    	}
+    }
+}
