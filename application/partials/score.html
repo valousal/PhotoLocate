@@ -1,4 +1,41 @@
-SCORE !
-
-
-ng-init : GetHighScore()
+<div> <!--ng-init='GetHighScore()'-->
+	<div id='score'>
+		<!-- <ul class='nav nav-tabs nav-justified'>
+			<li role='presentation' class='active'  ng-click="GetHighScore(Facile)"><a href="#/score">Facile</a></li>
+			<li role='presentation'  ng-click="GetHighScore(Normale)"><a href="#/score">Normale</a></li>
+			<li role='presentation'  ng-click="GetHighScore(Difficile)"><a href="#/score">Difficile</a></li>
+		</ul> -->
+		<form ng-submit='GetHighScore()'>
+			<h3>Paramètres highscore</h3>
+			<div class='form-group'>
+			    <label> Choisir votre difficulté </label>
+				<select class='form-control' name="level" ng-model="level" id="level-level">
+					<option value='Facile' selected='selected'> Facile </option>
+					<option value='Normale'> Normale </option>
+					<option value='Difficile'> Difficile </option>
+				</select>
+			</div>
+			<div class='form-group'>
+			    <label> Choisir votre ville </label>
+				<select class='form-control' name="ville" ng-model="ville" id="ville-ville">
+					<option value='Nancy' selected='selected'> Nancy </option>
+					<option value='Epinal'> Epinal </option>
+				</select>
+			</div>
+			<button class='btn btn-primary btn-lg btn-block'>Rechercher</button>
+		</form>
+		
+		<table class='table'>
+			<tr>
+				<th>Pseudo</th>
+				<th>Score</th>
+				<!-- <th>Ville</th> -->
+			</tr>
+			<tr ng-repeat="score in highscore"> 
+				<td>{{score.player}}</td>
+				<td>{{score.score}}</td>
+				<!-- <td>{{score.difficulte}}</td> -->
+			</tr>
+		</table>
+	</div>
+</div>

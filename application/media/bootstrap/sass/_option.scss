@@ -1,5 +1,5 @@
 #option{
-	height: 500px;
+	height: auto;
 	width: 400px;
 	margin: 4rem auto;
 	position: relative;
@@ -7,4 +7,36 @@
 	@media screen and (max-width: 400px) {
 		width: 100%;
 	}
+
+	button{
+		width: 10rem;
+		margin: auto;
+		margin-top: 3rem;
+	}
+
+	form{
+		width: 400px;
+		padding: 0rem 1.5rem;
+		margin: auto;
+
+		@media screen and (max-width: 400px) {
+			width: 100%;
+		}
+
+		h3{
+			width: 100%;
+			color: #777;
+			margin-top: 0rem; 
+			padding: 1rem 0rem;
+			text-align: center;
+		}
+
+		.form-group{
+			width: 100%;
+
+			select{
+				width: 100%;
+			}
+		}
+	}	
 }

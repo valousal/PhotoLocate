@@ -4,7 +4,7 @@
 
   app = angular.module('Application');
 
-  app.controller('GameController', function($scope, $rootScope, $resource, $http, $location, $routeParams, Session) {
+  app.controller('GameController', function($scope, $rootScope, $resource, $http, $location, $routeParams, $q, Session) {
     $scope.createGame = function() {
       return $http({
         method: 'POST',
@@ -36,31 +36,71 @@
       return $http({
         method: 'GET',
         url: "/PhotoLocate/service/play/games/" + Session.get('id') + "?apiKey=" + Session.get('token')
-      }).success(function(games) {
-        $scope.games = games;
+      }).success(function(game) {
+        Session.set('lat', game.ville.lat);
+        Session.set('lng', game.ville.lng);
+        Session.set('zoom', game.zoom);
+        Session.set('difficulte', game.difficulte);
         $scope.scoreTotal = 0;
         $scope.scoreManche = 0;
-        $scope.nbMancheMax = 1;
+        $scope.nbMancheMax = Session.get('difficulte').nb_photos;
         $scope.nbManche = 0;
         $scope.timerValue = 0;
-        $scope.map = L.map('map').setView([10, 10], 13);
+        $scope.zoom = Session.get('difficulte').temps;
+        $scope.distanceDiff = Session.get('difficulte').distance;
+        $scope.map = L.map('map').setView([Session.get('lat'), Session.get('lng')], $scope.zoom);
         $scope.markerTry = L.marker();
         $scope.distance = 0;
-        $scope.origin = [10, 10];
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo($scope.map);
+        $scope.greenIcon = L.icon({
+          iconUrl: 'media/Image/marker-icon-red.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          shadowAnchor: [12, 41],
+          popupAnchor: [0, -25]
+        });
+        $scope.tile_layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {}).addTo($scope.map);
+        $scope.tile_layer.on('load', function() {
+          $('#partieDebut').show();
+        });
         return $scope.GetPictures().then(function(response) {
           Session.set('pictures', response.data);
-          console.log(Session.get('pictures'));
           $scope.pictures = response.data;
+          $scope.map.on('click', function(obj) {
+            if ($scope.timerRunning && $scope.markerTry) {
+              $scope.finManche(obj);
+            }
+          });
           $scope.debutPartie = function() {
+            var arrayPhoto, i, object, _i, _len, _ref;
             $('#scoreManche').hide();
             $('#partieDebut').hide();
-            return $('#mancheSuivante').show();
+            arrayPhoto = new Array;
+            i = 0;
+            _ref = Session.get('pictures');
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              object = _ref[_i];
+              arrayPhoto[i] = {
+                'href': object.href,
+                'lat': object.image.lat,
+                'lng': object.image.lng
+              };
+              i = i + 1;
+            }
+            Session.set('arrayPhoto', arrayPhoto);
+            $scope.photoone = arrayPhoto[0].href;
+            $scope.lat = arrayPhoto[0].lat;
+            $scope.lng = arrayPhoto[0].lng;
+            $scope.origin = [$scope.lat, $scope.lng];
+
+            /*(arrayPhoto) ->
+            						console.log(arrayPhoto[i])
+             */
+            $('#mancheSuivante').show();
           };
           $scope.mancheSuivante = function() {
             $scope.scoreManche = 0;
             $scope.resetTimer();
-            return $scope.verifNbManche();
+            $scope.verifNbManche();
           };
           $scope.go = function() {
             $scope.nbManche += 1;
@@ -68,43 +108,42 @@
             $('#shadow').hide();
             $scope.markerTry = L.marker();
             $scope.distance = 0;
-            return $scope.startTimer();
+            $scope.startTimer();
           };
           $scope.finManche = function(obj) {
             $scope.stopTimer();
             $scope.afficheScore(obj);
             $scope.showOrigin();
-            return setTimeout(function() {
+            setTimeout(function() {
               $scope.resetMap();
               $('#shadow').show();
-              return $('#scoreManche').show();
+              $('#scoreManche').show();
             }, 3000);
           };
           $scope.noTime = function() {
             $scope.stopTimer();
             $scope.showOrigin();
-            return setTimeout(function() {
+            setTimeout(function() {
               $scope.resetMap();
               $('#shadow').show();
-              return $('#scoreManche').show();
+              $('#scoreManche').show();
             }, 3000);
           };
           $scope.showOrigin = function() {
-            return setTimeout(function() {
-              return $scope.originMarker = L.circle($scope.origin, 15, {
-                color: 'red',
-                fillColor: '#red',
-                fillOpacity: 0.5
+            setTimeout(function() {
+              return $scope.originMarker = L.marker($scope.origin, {
+                icon: $scope.greenIcon
               }).addTo($scope.map).bindPopup("C'était ici!").openPopup();
             }, 1000);
           };
           $scope.afficheScore = function(obj) {
+            $('#partieDebut').hide();
             $scope.markerTry.setLatLng(obj.latlng).addTo($scope.map);
             $scope.distance = $scope.markerTry.getLatLng().distanceTo($scope.origin);
-            $scope.calculScore(1000, 3);
+            $scope.calculScore($scope.distanceDiff / 3, $scope.timeTotal / 3);
             $scope.scoreTotal += $scope.scoreManche;
             $scope.timeManche = $scope.seconds;
-            return $scope.$apply();
+            $scope.$apply();
           };
           $scope.calculScore = function(dist, time) {
             if (dist) {
@@ -132,82 +171,83 @@
                 $scope.scoreManche *= 1;
               }
               if ($scope.timerValue > 3 * time) {
-                return $scope.scoreManche *= 0;
+                $scope.scoreManche *= 0;
               }
             }
           };
           $scope.resetMap = function() {
             $scope.map.removeLayer($scope.markerTry);
             $scope.map.removeLayer($scope.originMarker);
-            return $scope.$apply();
+            $scope.$apply();
           };
           $scope.verifNbManche = function() {
             if ($scope.nbManche < $scope.nbMancheMax) {
+              $scope.photoone = Session.get('arrayPhoto')[$scope.nbManche].href;
+
+              /*$scope.lat = Session.get('arrayPhoto')[$scope.nbManche].lat
+              						$scope.lng = Session.get('arrayPhoto')[$scope.nbManche].lng
+               */
+              $scope.origin = [Session.get('arrayPhoto')[$scope.nbManche].lat, Session.get('arrayPhoto')[$scope.nbManche].lng];
               $('#scoreManche').hide();
-              return $('#mancheSuivante').show();
+              $('#mancheSuivante').show();
             } else {
-              return $scope.finPartie();
+              $scope.finPartie();
             }
           };
           $scope.startTimer = function() {
             $scope.$broadcast('timer-start');
-            return $scope.timerRunning = true;
+            $scope.timerRunning = true;
           };
           $scope.stopTimer = function() {
             $scope.$broadcast('timer-stop');
-            return $scope.timerRunning = false;
+            $scope.timerRunning = false;
           };
           $scope.resetTimer = function() {
             $scope.$broadcast('timer-reset');
-            return $scope.timerRunning = false;
+            $scope.timerRunning = false;
           };
           $scope.$on('timer-tick', function(event, args) {
-            $scope.timerValue = args.millis(+'');
+            $scope.timerValue = args.millis + '';
             $scope.timerValue = parseInt($scope.timerValue / 1000);
-            return $scope.timerValue = 10 - $scope.timerValue;
+            $scope.timerValue = 10 - $scope.timerValue;
           });
-          return $scope.finPartie = function() {
+          $scope.finPartie = function() {
             $scope.stopTimer();
-            return setTimeout(function() {
+            setTimeout(function() {
               $scope.resetMap();
               $('#scoreManche').hide();
-              return $('#scoreFinal').show();
+              $('#scoreFinal').show();
             }, 0);
+            $http({
+              method: 'PUT',
+              url: '/PhotoLocate/service/play/games/' + Session.get('id') + "?apiKey=" + Session.get('token'),
+              data: {
+                status: 'Finish',
+                score: $scope.scoreTotal
+              }
+            }).success(function() {
+              return console.log('ok');
+            }).error(function() {
+              console.log('error');
+            });
           };
         });
       }).error(function() {
         return console.log($scope.games);
       });
     };
-    $scope.PutGame = function() {
-      return $http({
-        method: 'PUT',
-        url: '/PhotoLocate/service/play/games/72?apiKey=' + Session.get(),
-        data: {
-          status: 7330,
-          score: 1
-        },
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).success(function() {
-        return console.log('ok');
-      }).error(function() {
-        return console.log('error');
-      });
-    };
     return $scope.GetHighScore = function() {
-
-      /*$http({
-      			method: 'GET',
-      			url: '/PhotoLocate/service/play/games/72?apiKey='+Session.get(),
-      			data: {status: 7330, score: 1},
-      			headers: {'Content-Type': 'application/json'}
-      		}).success  ->
-      			console.log('ok')
-      		.error -> 
-      			console.log('error')
-       */
+      return $http({
+        method: 'GET',
+        url: '/PhotoLocate/service/play/games/score/' + $scope.level + "?ville=" + $scope.ville
+      }).success(function(HighScore) {
+        console.log('ok');
+        $scope.highscore = HighScore;
+        return console.log(HighScore);
+      }).error(function() {
+        console.log('error');
+        return console.log(level);
+      });
     };
   });
 

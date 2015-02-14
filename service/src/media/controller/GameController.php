@@ -125,7 +125,7 @@ class GameController extends AbstractController{
 		$nbImages = count($images);
 
 
-		$res = array("player"=>$game->player, "difficulte"=>$difficulte->label, "score"=>$game->score,"nbImages" =>$nbImages,
+		$res = array("player"=>$game->player, "difficulte"=>array("label"=>$difficulte->label, "distance"=>$difficulte->distance, "temps"=>$difficulte->temps, "nb_photos"=>$difficulte->nb_photos), "score"=>$game->score,"nbImages" =>$nbImages,
 			"ville"=>array("nom"=>$ville->nom, "lat"=>$ville->lat, "lng"=>$ville->lng)
 			);
 
@@ -151,7 +151,7 @@ class GameController extends AbstractController{
 		}
 
 		$ville = $game->ville;
-		$images = $ville->images()->get(); //rajouter un champs description photo dans la BDD?
+		$images = $ville->images()->orderByRaw('RAND()')->get(); //rajouter un champs description photo dans la BDD?
 
 		$imageAndLinks = array();
 
@@ -230,4 +230,36 @@ class GameController extends AbstractController{
 	        $app->halt(400, json_encode(array("erreur_message"=>'champs manquants ou invalide')));
 		}
 	}
+
+	//retourne classement 10 meilleurs
+	public function getScore($difficulte){
+		$app = \Slim\Slim::getInstance();
+
+		if(isset($_GET['ville']) && $_GET['ville']!= ""){
+			$villeName = filter_var($_GET['ville'], FILTER_SANITIZE_STRING);
+			$ville = Ville::where("nom", "=", $villeName)->first();
+			$difficulte = filter_var($difficulte, FILTER_SANITIZE_STRING);
+			$difficulte = Difficulte::where('label', '=', $difficulte)->first();
+			$games = Game::orderBy('score', 'desc')->take(10)->whereRaw('status = ? and id_difficulte = ? and id_ville = ?', array('finish', $difficulte->id, $ville->id))->get();
+		}else{
+			$difficulte = filter_var($difficulte, FILTER_SANITIZE_STRING);
+			$difficulte = Difficulte::where('label', '=', $difficulte)->first();
+			$games = Game::orderBy('score', 'desc')->take(10)->whereRaw('status = ? and id_difficulte = ?', array('finish', $difficulte->id))->get();
+			/*$app->response->headers->set('Content-type','application/json') ;
+			$app->halt(500, json_encode(array("erreur_message"=>'le parametre ville.name est absent')));*/
+		}
+
+		$arrRes = array();
+			foreach ($games as $game){
+				$arrRes[] = array("player"=> $game->player,
+									"score"=> $game->score,
+									"date" => $game->date,
+									"difficulte" => $difficulte->label
+					);
+			}
+		$app->response->headers->set('Content-type','application/json') ;
+		$app->response->setStatus(200) ;
+		echo json_encode($arrRes);
+	}
+
 }	

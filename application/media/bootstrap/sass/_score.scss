@@ -1,0 +1,92 @@
+#score{
+	height: auto;
+	width: 400px;
+	margin: 4rem auto;
+	position: relative;
+	padding: 0;
+	@media screen and (max-width: 400px) {
+		width: 100%;
+	}
+
+	button{
+		width: 12rem;
+		margin: 2rem auto;
+		font-size: 1.5rem;
+	}
+
+	form{
+		width: 400px;
+		padding: 0rem 1.5rem;
+		margin: auto;
+
+		@media screen and (max-width: 400px) {
+			width: 100%;
+		}
+
+		h3{
+			width: 100%;
+			color: #777;
+			margin-top: 0rem; 
+			padding: 1rem 0rem;
+			text-align: center;
+		}
+
+		.form-group{
+			width: 100%;
+
+			select{
+				width: 100%;
+			}
+		}
+	}	
+
+	.nav{
+		cursor: pointer;
+		padding: 1.5rem 0rem;
+		font-size: 1.7rem;
+
+		li{
+			padding: 1.5rem 0rem 0rem;
+
+			@media screen and (max-width: 765px) {
+				padding: 0rem;
+			}
+		}
+
+		.active{
+			a{
+				background-color: #337AB7;
+				color: white;
+			}
+		}
+	}
+
+	.table{
+		border: solid lightgrey 1px;
+
+		th{
+			background-color: #F3F3F3;
+			border-bottom: solid lightgrey 1px;
+			color: #337AB7;
+			padding: 1.5rem 1rem;
+			font-size: 1.7rem;
+			font-weight: normal;
+			text-align: center;
+
+			&:first-child{
+				font-weight: bold;
+				border-right: solid lightgrey 1px;
+			}
+		}
+
+		td{
+			padding: 1.5rem 1rem;
+			overflow: hidden;
+			text-align: center;
+
+			&:first-child{
+				border-right: solid lightgrey 1px;
+			}
+		}
+	}
+}

@@ -32,10 +32,12 @@
 		z-index: 999;
 		text-align: center;
 		color: white;
+		overflow: hidden;
 
 		#scoreManche{
 			display: none;
 			margin-top: 5em;
+			margin-bottom: 40rem;
 
 			div{
 				text-align: center;
@@ -53,6 +55,7 @@
 
 		#mancheSuivante{
 			display: none;
+			margin-bottom: 40rem;
 
 			img{
 				width: 200px;
@@ -72,7 +75,10 @@
 		}
 
 		#partieDebut{
+			display: none;
 			padding-top: 12rem;
+			margin-bottom: 40rem;
+
 			div{
 				margin: 1em 0em 0em;
 				width: 100%;
@@ -96,6 +102,8 @@
 		#scoreFinal{
 			display: none;
 			padding-top: 12rem;
+			margin-bottom: 40rem;
+
 			div{
 				margin: 1em 0em 0em;
 				width: 100%;
@@ -103,9 +111,12 @@
 				div{
 					padding: 0rem 2rem;
 
-					button{
-						min-width: auto;
+					a{
+						height: 5rem;
+						min-width: 10rem;
+						max-width: 15rem !important;
 						margin: 0px auto;
+
 						@media screen and (max-width: 640px) {
 							margin: auto;
 						}
@@ -128,6 +139,7 @@
 		border: 1px solid lightgrey;
 		border-top: 0;
 		border-right: 0;
+		overflow: hidden;
 
 		p{
 			font-size: 2.5rem;

@@ -1,0 +1,44 @@
+#regles{
+text-align: center;
+padding-top: 0rem;
+height: auto;
+width: 500px;
+margin: 4rem auto 4rem;
+position: relative;
+padding: 0;
+
+@media screen and (max-width: 500px) {
+	width: 100%;
+}
+	h3{
+		width: 100%;
+		color: #777;
+		margin-top: 0rem; 
+		padding: 1rem 0rem;
+	}
+
+	h4{
+		color: #337AB7;
+		padding: 0rem 1.5rem;
+		font-size: 1.5rem;
+		font-weight: bold;
+		text-align: left;
+	}
+
+	p{
+		font-size: 1.5rem;
+		padding: 1rem 1.5rem;
+		text-align: justify;
+		text-indent: 2rem;
+	}
+
+	ul{
+		margin-bottom: 2rem;
+	}
+
+	li{
+		list-style-type: circle;
+		text-align: left;
+		margin-bottom: 0.5rem;
+	}
+}

@@ -1,5 +1,17 @@
 #titre{
 	text-align: center;
+	box-sizing: border-box;
+	width: 500px;
+	margin: 2rem auto;
+	padding: 1rem;
+
+	@media screen and (max-width: 500px) {
+		width: 100%;
+	}
+
+	small{
+		white-space: nowrap;
+	}
 
 	a{
 		text-decoration: none;

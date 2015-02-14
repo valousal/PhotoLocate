@@ -4,11 +4,11 @@ session_start();
 require "vendor/autoload.php";
 use \media\controller ;
 use \media\modele\DataBaseConnect ;
+use \media\view ;
 
 $app = new \Slim\Slim(); //Slim init
 
 DataBaseConnect::setConfig("config/config.ini"); 
-
 
 /*********************************************************************/
 /******************************API REST*******************************/
@@ -36,26 +36,44 @@ $app->group('/play', function () use ($app) {
 		$app->put('/:id', function($id) use ($app, $c) {
 			$c->putGame($id);
 		});
+
+		//Retourne score des parties finies par difficulte
+		$app->get('/score/:difficulte', function($difficulte) use ($app, $c) { //ville en param
+			$c->getScore($difficulte);
+		});
 	});
 });
 
 
 //Fonctionnalités pour le module d'administration
 $app->group('/admin', function () use ($app) {
+
+		$checkLog = function () use ($app){ //verifie si log ou pas
+		    return function()
+		    {        
+				if (!isset($_SESSION['logged']) || $_SESSION['logged']==false){
+					$v = new view\ViewFormLog;
+					$v->display();
+					exit;
+				}
+		    };
+
+		};
+
 		//Le controleur
 		$c = new controller\AdminController;
 		//traitement Ajout d'image + données de localisations
-		$app->post('/images', function() use ($app, $c) {
+		$app->post('/images', $checkLog(), function() use ($app, $c) {
 			$c->postImage();
 		})->name('traitementAjoutImage');
 
 		//racine
-		$app->get('/', function() use ($app, $c) {
+		$app->get('/', $checkLog(), function() use ($app, $c) {
 			$c->displayIndex();
 		})->name('index');
 
 		//formulaire ajout images
-		$app->get('/formAddImage', function() use ($app, $c) {
+		$app->get('/formAddImage', $checkLog(), function() use ($app, $c) {
 			$c->display_formAddImage();
 		})->name('formAddImage');
 
@@ -65,14 +83,39 @@ $app->group('/admin', function () use ($app) {
 		})->name('traitementAjoutImage');*/
 
 		//formulaire modif param
-		$app->get('/formParam', function() use ($app, $c) {
+		$app->get('/formParam', $checkLog(), function() use ($app, $c) {
 			$c->display_formParam();
 		})->name('formParam');
 
 		//traitement modif param
-		$app->put('/images', function() use ($app, $c) {
+		$app->put('/images',$checkLog(), function() use ($app, $c) {
 			$c->putParam();
 		})->name('traitementModifParam');
+
+		//formulaire login
+		$app->get('/login', function() use ($app, $c) {
+			$c->formLog();
+		})->name('afficheLogin');
+
+		//traitement login
+		$app->post('/login', function() use ($app, $c) {
+			$c->traitementLog();
+		})->name('login');
+
+		//formulaire ajout admin
+		$app->get('/addAdmin', $checkLog(), function() use ($app, $c) {
+			$c->formAddAdmin();
+		})->name('formAddAdmin');
+
+		//traitement ajout admin
+		$app->post('/addAdmin', $checkLog(), function() use ($app, $c) {
+			$c->traitementFormAddAdmin();
+		})->name('traitementFormAddAdmin');
+
+		//Logout
+		$app->get('/logout', function() use ($app, $c){
+			$c->logout();
+		})->name('logout');
 });
 
 

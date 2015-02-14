@@ -1,14 +1,14 @@
 {% extends "main.html.twig" %}
 
 {% block main_content %}
-    <div class="row">
+    <div class='formAdd'>
        <form class="col-sm-6 col-sm-offset-3" action='{{traitementForm}}' method='post' enctype="multipart/form-data">
 
           <h3> Modifier les paramètres </h3><br>
 
           <div class="form-group">
             <label for="Difficulte"> Difficulte</label>
-            <select name="difficulte">
+            <select class='form-control' name="difficulte">
               {% for difficulte in difficultes %}
                   <option value="{{ difficulte.label|e }}">{{ difficulte.label|e }}</option>
               {% endfor %}
@@ -17,19 +17,24 @@
 
           <div class="form-group">
             <label for="Distance"> Distance</label>
-            <input type="number" name='distance' class="form-control" id="distance" placeholder="distance" step="1"/>
+            <input type="number" name='distance' class="form-control" id="distance" placeholder="distance" step="1" min="1"/>
           </div>
 
          <div class="form-group">
             <label for="Temps"> Temps</label>
-            <input type="number" name='temps' class="form-control" id="temps" placeholder="temps" step="1"/>
+            <input type="number" name='temps' class="form-control" id="temps" placeholder="temps" step="1" min="1"/>
+          </div>
+
+          <div class="form-group">
+            <label for="Nombre Photos"> Nombre Photos (Ne doit pas dépasser le nombre de photos disponible de la ville)</label>
+            <input type="number" name='nb_photos' class="form-control" id="nb_photos" placeholder="Nombres de photos" step="1" min="1"/>
           </div>
 
           <input type="hidden" name="_METHOD" value="PUT"/>
           
           <div class="button-container">
-            <input class="btn btn-default" type="submit" value="Submit" name="Submit"/>
-            <input class="btn btn-default" type="reset" value="Reset" name="reset"/>
+            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit" name="Submit"/>
+            <input class="btn btn-primary btn-lg btn-block" type="reset" value="Reset" name="reset"/>
           </div>
        </form>
        <ul>

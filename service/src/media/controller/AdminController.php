@@ -4,6 +4,7 @@ use \media\modele\Difficulte ;
 use \media\modele\Game ;
 use \media\modele\Image ;
 use \media\modele\Ville ;
+use \media\modele\Admin ;
 use \media\view ;
 use \media\script\CRSFGuard ;
 
@@ -22,7 +23,7 @@ class AdminController extends AbstractController{
 
 		$crsfGuard = new CRSFGuard();
 		if ($crsfGuard::csrfguard_validate_token($_POST['CSRFName'], $_POST['CSRFToken'])){
-			if (isset($_POST['ville'], $_POST['lat'], $_POST['lng'], $_POST['adresse']) && filter_var($_POST['lat'], FILTER_VALIDATE_FLOAT) && filter_var($_POST['lng'], FILTER_VALIDATE_FLOAT) ) {
+			if (isset($_POST['ville'], $_POST['lat'], $_POST['lng'], $_POST['adresse'], $_POST['nom_img']) && filter_var($_POST['lat'], FILTER_VALIDATE_FLOAT) && filter_var($_POST['lng'], FILTER_VALIDATE_FLOAT) ) {
 				$ville = Ville::where("nom", '=', filter_input(INPUT_POST, 'ville', FILTER_SANITIZE_STRING))->first();
 				$lng = $_POST['lng'];
 				$lat = $_POST['lat'];
@@ -31,6 +32,10 @@ class AdminController extends AbstractController{
 				// //Gestion image avec la librairy
 				$storage = new \Upload\Storage\FileSystem('src/img');
 				$file = new \Upload\File('image', $storage);
+
+				$new_filename = filter_input(INPUT_POST, 'nom_img', FILTER_SANITIZE_STRING);
+				$new_filename = str_replace(" ", "_", $new_filename);
+				$file->setName($new_filename);
 
 				// // Validate file upload
 				// // MimeType List => http://www.webmaster-toolkit.com/mime-types.shtml
@@ -90,7 +95,8 @@ class AdminController extends AbstractController{
 					exit;
 			}
 
-			$v = new view\ViewRecapAddImage($image);
+			//$v = new view\ViewRecapAddImage($image);
+			$v = new view\ViewIndex;
 			$v->display();
 		}else{
 			$v = new view\ViewErreur;
@@ -118,10 +124,11 @@ class AdminController extends AbstractController{
 		$rootUri .= $app->request->getRootUri();
 		$crsfGuard = new CRSFGuard();
 		if ($crsfGuard::csrfguard_validate_token($_POST['CSRFName'], $_POST['CSRFToken'])){
-			if ($app->request->put('difficulte')!= null && filter_var($app->request->put('distance'), FILTER_VALIDATE_FLOAT) &&  filter_var($app->request->put('temps'), FILTER_VALIDATE_FLOAT)) {
+			if ($app->request->put('difficulte')!= null && $app->request->put('nb_photos')!= null && filter_var($app->request->put('distance'), FILTER_VALIDATE_FLOAT) &&  filter_var($app->request->put('temps'), FILTER_VALIDATE_FLOAT)) {
 				$difficulte = difficulte::where("label", '=', filter_var($app->request->put('difficulte'), FILTER_SANITIZE_STRING))->first();
 				$difficulte->temps = $app->request->put('temps');
 				$difficulte->distance = $app->request->put('distance');
+				$difficulte->nb_photos = filter_var($app->request->put('nb_photos'), FILTER_SANITIZE_NUMBER_INT);
 				$difficulte->save();
 				$v = new view\ViewIndex;
 				$v->display();
@@ -190,6 +197,108 @@ class AdminController extends AbstractController{
 
 		$v = new view\ViewFormModifParam($arrDifficulte);
 		$v->display();
+	}
+
+	public function formLog(){
+		$app = \Slim\Slim::getInstance();
+		$rootUri = $app->request->getUrl();
+		$rootUri .= $app->request->getRootUri();
+
+		if (!isset($_SESSION['logged']) || $_SESSION['logged']==false){
+			$v = new view\ViewFormLog;
+			$v->display();
+			exit;
+		}else{
+			$v = new view\ViewIndex;
+			$v->display();
+			exit;	
+		}		
+	}
+
+	public function traitementLog(){
+		$crsfGuard = new CRSFGuard();
+		if ($crsfGuard::csrfguard_validate_token($_POST['CSRFName'], $_POST['CSRFToken'])){
+			if (!isset($_SESSION['logged']) || $_SESSION['logged']==false){
+				if (isset($_POST['login'], $_POST['password'])){
+					$login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
+					$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+					try{
+						$admin = Admin::where('login', '=', $login)->first();
+						$hash = $admin->password;
+						if(password_verify($password, $hash)){
+							$_SESSION['id'] = $admin->id;
+							$_SESSION['login'] = $admin->login;
+							$_SESSION['password'] = $admin->password;
+							$_SESSION['logged'] = true;
+
+							$v = new view\ViewIndex;
+							$v->display();
+						}else{
+							$v = new view\ViewErreur;
+							$v->display();
+						}
+					} catch (\Exception $e) {
+						$v = new view\ViewErreur;
+						$v->display();
+					}
+				}else{
+					$v = new view\ViewErreur;
+					$v->display();		
+				}
+			}else{
+				$v = new view\ViewIndex;
+				$v->display();
+				exit;	
+			}
+		}else{
+			$v = new view\ViewErreur;
+			$v->display();
+		}
+	}
+
+	public function formAddAdmin(){
+		$app = \Slim\Slim::getInstance();
+		$rootUri = $app->request->getUrl();
+		$rootUri .= $app->request->getRootUri();
+
+		$v = new view\ViewFormAdmin;
+		$v->display();
+	}
+
+	public function traitementFormAddAdmin(){
+		$crsfGuard = new CRSFGuard();
+		if ($crsfGuard::csrfguard_validate_token($_POST['CSRFName'], $_POST['CSRFToken'])){
+			if (isset($_POST['login'], $_POST['password'])){
+				$login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
+				$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+				$hash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 10));
+
+				$admin = new Admin;
+				$admin->login = $login;
+				$admin->password = $hash;
+				$admin->save();
+
+				$v = new view\ViewIndex;
+				$v->display();
+			}else{
+				$v = new view\ViewErreur;
+				$v->display();		
+			}
+		}else{
+			$v = new view\ViewErreur;
+			$v->display();	
+		}
+	}
+
+	public function logout(){
+		unset($_SESSION['id']);
+		unset($_SESSION['login']);
+		unset($_SESSION['password']);
+		unset($_SESSION['logged']);
+
+		$app = \Slim\Slim::getInstance();
+		$app->response->redirect($app->urlFor('index'), 303);
 	}
 
 }

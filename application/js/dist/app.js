@@ -17,6 +17,9 @@
     }).when('/score', {
       templateUrl: 'partials/score.html',
       controller: 'GameController'
+    }).when('/regles', {
+      templateUrl: 'partials/regles.html',
+      controller: 'GameController'
     }).otherwise({
       redirectTo: '/'
     });

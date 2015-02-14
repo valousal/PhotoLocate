@@ -2,11 +2,12 @@
 <html>
     <head>
     	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" /> 
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>PhotoLocate</title>
         
         <!-- bootstrap -->
         <link rel="stylesheet" type="text/css" href="media/bootstrap/stylesheets/styles.css" />
+    
+
 
         <!-- references -->
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -38,6 +39,11 @@
 
    	<!-- BODY -->
     <body ng-app='Application'>
+
+        <div class="row page-header">
+            <h1 id='titre'><a href='#/'>PhotoLocate </a><small>Un Jeu qu'il est bien</small></h1>
+        </div>
+
 		<div ng-view>
 		</div>
 

@@ -370,8 +370,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?1423612278);
-  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?&1423612278#iefix) format("embedded-opentype"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff2?1423612278) format("woff2"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff?1423612278) format("woff"), url(/fonts/bootstrap/glyphicons-halflings-regular.ttf?1423612278) format("truetype"), url(/fonts/bootstrap/glyphicons-halflings-regular.svg?1423612278#glyphicons_halflingsregular) format("svg");
+  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?1423862350);
+  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?&1423862350#iefix) format("embedded-opentype"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff2?1423862350) format("woff2"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff?1423862350) format("woff"), url(/fonts/bootstrap/glyphicons-halflings-regular.ttf?1423862350) format("truetype"), url(/fonts/bootstrap/glyphicons-halflings-regular.svg?1423862350#glyphicons_halflingsregular) format("svg");
 }
 /* line 22, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/bootstrap-sass-3.3.3/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon {
@@ -8542,8 +8542,22 @@ button.close {
 /* line 1, ../sass/_body.scss */
 #titre {
   text-align: center;
+  box-sizing: border-box;
+  width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
 }
-/* line 4, ../sass/_body.scss */
+@media screen and (max-width: 500px) {
+  /* line 1, ../sass/_body.scss */
+  #titre {
+    width: 100%;
+  }
+}
+/* line 12, ../sass/_body.scss */
+#titre small {
+  white-space: nowrap;
+}
+/* line 16, ../sass/_body.scss */
 #titre a {
   text-decoration: none;
 }
@@ -8569,7 +8583,7 @@ button.close {
 
 /* line 1, ../sass/_option.scss */
 #option {
-  height: 500px;
+  height: auto;
   width: 400px;
   margin: 4rem auto;
   position: relative;
@@ -8580,6 +8594,40 @@ button.close {
   #option {
     width: 100%;
   }
+}
+/* line 11, ../sass/_option.scss */
+#option button {
+  width: 10rem;
+  margin: auto;
+  margin-top: 3rem;
+}
+/* line 17, ../sass/_option.scss */
+#option form {
+  width: 400px;
+  padding: 0rem 1.5rem;
+  margin: auto;
+}
+@media screen and (max-width: 400px) {
+  /* line 17, ../sass/_option.scss */
+  #option form {
+    width: 100%;
+  }
+}
+/* line 26, ../sass/_option.scss */
+#option form h3 {
+  width: 100%;
+  color: #777;
+  margin-top: 0rem;
+  padding: 1rem 0rem;
+  text-align: center;
+}
+/* line 34, ../sass/_option.scss */
+#option form .form-group {
+  width: 100%;
+}
+/* line 37, ../sass/_option.scss */
+#option form .form-group select {
+  width: 100%;
 }
 
 /* line 1, ../sass/_game.scss */
@@ -8622,56 +8670,61 @@ button.close {
   z-index: 999;
   text-align: center;
   color: white;
+  overflow: hidden;
 }
-/* line 36, ../sass/_game.scss */
+/* line 37, ../sass/_game.scss */
 #game #shadow #scoreManche {
   display: none;
   margin-top: 5em;
+  margin-bottom: 40rem;
 }
-/* line 40, ../sass/_game.scss */
+/* line 42, ../sass/_game.scss */
 #game #shadow #scoreManche div {
   text-align: center;
 }
 @media screen and (max-width: 640px) {
-  /* line 45, ../sass/_game.scss */
+  /* line 47, ../sass/_game.scss */
   #game #shadow #scoreManche div div button {
     margin: auto;
   }
 }
-/* line 54, ../sass/_game.scss */
+/* line 56, ../sass/_game.scss */
 #game #shadow #mancheSuivante {
   display: none;
+  margin-bottom: 40rem;
 }
-/* line 57, ../sass/_game.scss */
+/* line 60, ../sass/_game.scss */
 #game #shadow #mancheSuivante img {
   width: 200px;
   height: 200px;
   margin: auto;
 }
-/* line 63, ../sass/_game.scss */
+/* line 66, ../sass/_game.scss */
 #game #shadow #mancheSuivante div {
   margin-top: 1em;
 }
-/* line 66, ../sass/_game.scss */
+/* line 69, ../sass/_game.scss */
 #game #shadow #mancheSuivante div button {
   min-width: 10rem;
   max-width: 20rem;
   margin: auto;
 }
-/* line 74, ../sass/_game.scss */
+/* line 77, ../sass/_game.scss */
 #game #shadow #partieDebut {
+  display: none;
   padding-top: 12rem;
+  margin-bottom: 40rem;
 }
-/* line 76, ../sass/_game.scss */
+/* line 82, ../sass/_game.scss */
 #game #shadow #partieDebut div {
   margin: 1em 0em 0em;
   width: 100%;
 }
-/* line 80, ../sass/_game.scss */
+/* line 86, ../sass/_game.scss */
 #game #shadow #partieDebut div div {
   padding: 0rem 2rem;
 }
-/* line 83, ../sass/_game.scss */
+/* line 89, ../sass/_game.scss */
 #game #shadow #partieDebut div div button {
   height: 5rem;
   min-width: 10rem;
@@ -8679,37 +8732,40 @@ button.close {
   margin: 0px auto;
 }
 @media screen and (max-width: 640px) {
-  /* line 83, ../sass/_game.scss */
+  /* line 89, ../sass/_game.scss */
   #game #shadow #partieDebut div div button {
     margin: auto;
   }
 }
-/* line 96, ../sass/_game.scss */
+/* line 102, ../sass/_game.scss */
 #game #shadow #scoreFinal {
   display: none;
   padding-top: 12rem;
+  margin-bottom: 40rem;
 }
-/* line 99, ../sass/_game.scss */
+/* line 107, ../sass/_game.scss */
 #game #shadow #scoreFinal div {
   margin: 1em 0em 0em;
   width: 100%;
 }
-/* line 103, ../sass/_game.scss */
+/* line 111, ../sass/_game.scss */
 #game #shadow #scoreFinal div div {
   padding: 0rem 2rem;
 }
-/* line 106, ../sass/_game.scss */
-#game #shadow #scoreFinal div div button {
-  min-width: auto;
+/* line 114, ../sass/_game.scss */
+#game #shadow #scoreFinal div div a {
+  height: 5rem;
+  min-width: 10rem;
+  max-width: 15rem !important;
   margin: 0px auto;
 }
 @media screen and (max-width: 640px) {
-  /* line 106, ../sass/_game.scss */
-  #game #shadow #scoreFinal div div button {
+  /* line 114, ../sass/_game.scss */
+  #game #shadow #scoreFinal div div a {
     margin: auto;
   }
 }
-/* line 118, ../sass/_game.scss */
+/* line 129, ../sass/_game.scss */
 #game #time {
   width: 7rem;
   height: 4.5rem;
@@ -8723,8 +8779,157 @@ button.close {
   border: 1px solid lightgrey;
   border-top: 0;
   border-right: 0;
+  overflow: hidden;
 }
-/* line 132, ../sass/_game.scss */
+/* line 144, ../sass/_game.scss */
 #game #time p {
   font-size: 2.5rem;
+}
+
+/* line 1, ../sass/_score.scss */
+#score {
+  height: auto;
+  width: 400px;
+  margin: 4rem auto;
+  position: relative;
+  padding: 0;
+}
+@media screen and (max-width: 400px) {
+  /* line 1, ../sass/_score.scss */
+  #score {
+    width: 100%;
+  }
+}
+/* line 11, ../sass/_score.scss */
+#score button {
+  width: 12rem;
+  margin: 2rem auto;
+  font-size: 1.5rem;
+}
+/* line 17, ../sass/_score.scss */
+#score form {
+  width: 400px;
+  padding: 0rem 1.5rem;
+  margin: auto;
+}
+@media screen and (max-width: 400px) {
+  /* line 17, ../sass/_score.scss */
+  #score form {
+    width: 100%;
+  }
+}
+/* line 26, ../sass/_score.scss */
+#score form h3 {
+  width: 100%;
+  color: #777;
+  margin-top: 0rem;
+  padding: 1rem 0rem;
+  text-align: center;
+}
+/* line 34, ../sass/_score.scss */
+#score form .form-group {
+  width: 100%;
+}
+/* line 37, ../sass/_score.scss */
+#score form .form-group select {
+  width: 100%;
+}
+/* line 43, ../sass/_score.scss */
+#score .nav {
+  cursor: pointer;
+  padding: 1.5rem 0rem;
+  font-size: 1.7rem;
+}
+/* line 48, ../sass/_score.scss */
+#score .nav li {
+  padding: 1.5rem 0rem 0rem;
+}
+@media screen and (max-width: 765px) {
+  /* line 48, ../sass/_score.scss */
+  #score .nav li {
+    padding: 0rem;
+  }
+}
+/* line 57, ../sass/_score.scss */
+#score .nav .active a {
+  background-color: #337AB7;
+  color: white;
+}
+/* line 64, ../sass/_score.scss */
+#score .table {
+  border: solid lightgrey 1px;
+}
+/* line 67, ../sass/_score.scss */
+#score .table th {
+  background-color: #F3F3F3;
+  border-bottom: solid lightgrey 1px;
+  color: #337AB7;
+  padding: 1.5rem 1rem;
+  font-size: 1.7rem;
+  font-weight: normal;
+  text-align: center;
+}
+/* line 76, ../sass/_score.scss */
+#score .table th:first-child {
+  font-weight: bold;
+  border-right: solid lightgrey 1px;
+}
+/* line 82, ../sass/_score.scss */
+#score .table td {
+  padding: 1.5rem 1rem;
+  overflow: hidden;
+  text-align: center;
+}
+/* line 87, ../sass/_score.scss */
+#score .table td:first-child {
+  border-right: solid lightgrey 1px;
+}
+
+/* line 1, ../sass/_regles.scss */
+#regles {
+  text-align: center;
+  padding-top: 0rem;
+  height: auto;
+  width: 500px;
+  margin: 4rem auto 4rem;
+  position: relative;
+  padding: 0;
+}
+@media screen and (max-width: 500px) {
+  /* line 1, ../sass/_regles.scss */
+  #regles {
+    width: 100%;
+  }
+}
+/* line 13, ../sass/_regles.scss */
+#regles h3 {
+  width: 100%;
+  color: #777;
+  margin-top: 0rem;
+  padding: 1rem 0rem;
+}
+/* line 20, ../sass/_regles.scss */
+#regles h4 {
+  color: #337AB7;
+  padding: 0rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: left;
+}
+/* line 28, ../sass/_regles.scss */
+#regles p {
+  font-size: 1.5rem;
+  padding: 1rem 1.5rem;
+  text-align: justify;
+  text-indent: 2rem;
+}
+/* line 35, ../sass/_regles.scss */
+#regles ul {
+  margin-bottom: 2rem;
+}
+/* line 39, ../sass/_regles.scss */
+#regles li {
+  list-style-type: circle;
+  text-align: left;
+  margin-bottom: 0.5rem;
 }
