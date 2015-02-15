@@ -13,7 +13,7 @@ class ViewformAddImage extends ViewMain {
 		$this->villes = $villes;
 		
 		$this->layout = 'formAddImage.html.twig'; //mettre document.twig
-		$this->arrayVar['traitementForm'] = \Slim\Slim::getInstance()->urlFor('traitementModifParam');
+		$this->arrayVar['traitementForm'] = \Slim\Slim::getInstance()->urlFor('traitementAjoutImage');
 		$this->arrayVar['villes'] = $villes;
 	}
 

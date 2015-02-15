@@ -1,0 +1,11 @@
+{% extends "main.html.twig" %}
+
+{% block main_content %}
+	<div id='home'>
+       <h3>Administration</h3><br>
+	   	<a href="{{urlFormAddImage}}" class="btn btn-primary btn-lg btn-block">Ajouter des images</a>
+	    <a href="{{urlFormModifParam}}" class="btn btn-primary btn-lg btn-block">Modifier les paramètres</a>
+	    <a href="{{urlFormAddAdmin}}" class="btn btn-primary btn-lg btn-block">Ajouter des administrateurs</a>
+	    <a href="{{logout}}" class="btn btn-primary btn-lg btn-block btn-deco">Se déconnecter</a>
+    </div>
+{% endblock %}

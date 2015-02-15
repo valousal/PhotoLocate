@@ -189,13 +189,11 @@ class AdminController extends AbstractController{
 	// }
 
 	public function display_formParam(){
-		$app = \Slim\Slim::getInstance();
-		$rootUri = $app->request->getUrl();
-		$rootUri .= $app->request->getRootUri();
-
-		$arrDifficulte = Difficulte::all();
-
-		$v = new view\ViewFormModifParam($arrDifficulte);
+		//$arrDifficulte = Difficulte::all();
+		echo "toto";
+		//print_r($arrDifficulte);
+		//$arrDifficulte = array("test"=>'toto', "terst2"=>'toto2');
+		$v = new view\ViewFormModifParam;
 		$v->display();
 	}
 
@@ -299,6 +297,12 @@ class AdminController extends AbstractController{
 
 		$app = \Slim\Slim::getInstance();
 		$app->response->redirect($app->urlFor('index'), 303);
+	}
+	
+	public function testFunction(){
+		$arrDifficulte = Difficulte::all();
+		$v = new view\ViewformModifParam($arrDifficulte);
+		$v->display();
 	}
 
 }

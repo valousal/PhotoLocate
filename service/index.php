@@ -83,12 +83,12 @@ $app->group('/admin', function () use ($app) {
 		})->name('traitementAjoutImage');*/
 
 		//formulaire modif param
-		$app->get('/formParam', $checkLog(), function() use ($app, $c) {
+		/*$app->get('/formParam', $checkLog(), function() use ($app, $c) {
 			$c->display_formParam();
-		})->name('formParam');
+		})->name('formParams');*/
 
 		//traitement modif param
-		$app->put('/images',$checkLog(), function() use ($app, $c) {
+		$app->put('/formParam',$checkLog(), function() use ($app, $c) {
 			$c->putParam();
 		})->name('traitementModifParam');
 
@@ -116,6 +116,11 @@ $app->group('/admin', function () use ($app) {
 		$app->get('/logout', function() use ($app, $c){
 			$c->logout();
 		})->name('logout');
+		
+		//formulaire modif param
+		$app->get('/parametres', $checkLog(), function() use ($app, $c) {
+			$c->testFunction();
+		})->name('parametres');
 });
 
 

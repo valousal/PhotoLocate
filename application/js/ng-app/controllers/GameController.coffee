@@ -101,6 +101,7 @@ app.controller 'GameController', ($scope,$rootScope, $resource,$http,$location,$
 						return
 
 				$scope.debutPartie = ->
+					$('#partieDebut').remove();
 					$('#scoreManche').hide();
 					$('#partieDebut').hide();
 					## ----------------------------recuperation de la 1er image
@@ -181,7 +182,7 @@ app.controller 'GameController', ($scope,$rootScope, $resource,$http,$location,$
 					$('#partieDebut').hide();
 					$scope.markerTry.setLatLng(obj.latlng).addTo($scope.map);
 					$scope.distance = $scope.markerTry.getLatLng().distanceTo($scope.origin);
-					$scope.calculScore(($scope.distanceDiff)/3,($scope.timeTotal)/3);
+					$scope.calculScore(($scope.distanceDiff)/3,(10/3);
 					$scope.scoreTotal += $scope.scoreManche;
 					$scope.timeManche = $scope.seconds;
 					$scope.$apply();

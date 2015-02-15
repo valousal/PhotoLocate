@@ -12,7 +12,11 @@ class ViewformModifParam extends ViewMain {
 		$this->difficulte = $difficulte;
 		
 		$this->layout = 'formModifParam.html.twig'; //mettre document.twig
-		$this->arrayVar['traitementForm'] = \Slim\Slim::getInstance()->urlFor('traitementAjoutImage');
+<<<<<<< HEAD
+		$this->arrayVar['traitementForm'] = \Slim\Slim::getInstance()->urlFor('traitementModifParam'); // \Slim\Slim::getInstance()->urlFor('traitementAjoutImage');
+=======
+		$this->arrayVar['traitementForm'] = \Slim\Slim::getInstance()->urlFor('traitementModifParam');
+>>>>>>> 790a9e994cb0503c58b0684e07911b5ad0fa2ee5
 		$this->arrayVar['difficultes'] = $difficulte;
 	}
 

@@ -72,6 +72,7 @@
           });
           $scope.debutPartie = function() {
             var arrayPhoto, i, object, _i, _len, _ref;
+            $('#partieDebut').remove();
             $('#scoreManche').hide();
             $('#partieDebut').hide();
             arrayPhoto = new Array;
@@ -140,7 +141,7 @@
             $('#partieDebut').hide();
             $scope.markerTry.setLatLng(obj.latlng).addTo($scope.map);
             $scope.distance = $scope.markerTry.getLatLng().distanceTo($scope.origin);
-            $scope.calculScore($scope.distanceDiff / 3, $scope.timeTotal / 3);
+            $scope.calculScore($scope.distanceDiff / 3, (10/3));
             $scope.scoreTotal += $scope.scoreManche;
             $scope.timeManche = $scope.seconds;
             $scope.$apply();
